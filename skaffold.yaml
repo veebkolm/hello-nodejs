@@ -1,0 +1,23 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: hello-nodejs
+
+manifests:
+  rawYaml:
+     - deployment.yaml
+
+deploy:
+  kubectl: {}
+
+build:
+  artifacts:
+  - image: hello-nodejs
+
+  # Comment following lines below to build locally
+  # Note you also need to fetch Docker registry credentials
+  # by following instructions provided at dashboard.codemowers.eu
+  cluster:
+    dockerConfig:
+      secretName: kaniko-secret
+

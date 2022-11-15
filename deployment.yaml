@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-nodejs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-nodejs
+  template:
+    metadata:
+      labels:
+        app: hello-nodejs
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: hello-nodejs
+          image: hello-nodejs
+          env:
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          ports:
+            - containerPort: 3000
+              name: metrics
